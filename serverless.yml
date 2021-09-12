@@ -1,0 +1,17 @@
+service: ts-serverless-boilerplate
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  memorySize: 256
+  region: us-east-2
+
+plugins:
+  - serverless-plugin-typescript
+
+functions:
+  ts-serverless-boilerplate:
+    handler: index.handle
