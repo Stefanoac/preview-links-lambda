@@ -7,7 +7,6 @@ Boilerplate para serverless em TS, ele já vem com várias ferramentas já confi
 ## Como iniciar o desenvolvimento
 
 - Instale a versão 12 do [NodeJS](https://nodejs.org/en/download/).
-- Configure seu ambiente para ter acesso à pacotes privados como documentado [nessa doc](https://www.notion.so/movidesk/Como-autenticar-e-usar-nossas-bibliotecas-internas-23337b30b8e94009b7f8d3d9321730e4).
 - Abra seu CLI preferido e rode os comandos.
 
 ````.cli
