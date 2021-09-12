@@ -19,7 +19,7 @@ $ yarn start
 
 Executa os testes em watch.
 
-## Como publicar
+## Deploy
 
 A publicação de pacotes acontecerá ao criar uma nova release no Github, cheque [essa doc](https://docs.github.com/en/enterprise/2.15/user/articles/creating-releases) pra mais informações, pro nome da versão, dê uma [olhadinha aqui](https://docs.npmjs.com/about-semantic-versioning).
 
