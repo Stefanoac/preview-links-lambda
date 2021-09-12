@@ -24,6 +24,8 @@ Executa os testes em watch.
 
 A publicação de pacotes acontecerá ao criar uma nova release no Github, cheque [essa doc](https://docs.github.com/en/enterprise/2.15/user/articles/creating-releases) pra mais informações, pro nome da versão, dê uma [olhadinha aqui](https://docs.npmjs.com/about-semantic-versioning).
 
+## Outros comandos
+
 ### `yarn lint`
 
 "Linta" a aplicação utilizando os padrões os padrões de código descritos [aqui](https://github.com/movidesk/frontend-chapter/blob/master/estilo_codigo_padrao.md).
