@@ -27,7 +27,7 @@ A publicação de pacotes acontecerá ao criar uma nova release no Github, chequ
 
 ### `yarn lint`
 
-"Linta" a aplicação utilizando os padrões os padrões de código descritos [aqui](https://github.com/movidesk/frontend-chapter/blob/master/estilo_codigo_padrao.md).
+"Linta" a aplicação utilizando os padrões de código descritos [aqui](https://github.com/movidesk/frontend-chapter/blob/master/estilo_codigo_padrao.md).
 
 ### `yarn test`
 
