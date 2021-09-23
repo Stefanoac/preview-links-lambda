@@ -1,6 +1,11 @@
-import {
-  headers, handle, SUCCESS_MSG, EMPTY_BODY_ERROR_MSG,
-} from '.';
+import { headers, handle, EMPTY_BODY_ERROR_MSG } from '.';
+
+const FAKE_PROP_CONTENT = 'https://www.facebook.com';
+const SUCCESS_MSG:string = JSON.stringify({ title:"teste", description:null, image:null, origin:FAKE_PROP_CONTENT }, null, 2)
+
+jest.mock('./api', () => ({ 
+  get: jest.fn(() => Promise.resolve("<html><head><title>teste</title></head></html>"))
+}));
 
 test('on fail, should return 500 code', async () => {
   const fakePayload = {
@@ -15,22 +20,18 @@ test('on fail, should return 500 code', async () => {
   });
 });
 
-test('on success, should log payload and return 301 code', async () => {
-  global.console.log = jest.fn();
-  const FAKE_PROP_CONTENT = 'oi mundo';
+test('on success, should log payload and return 200 code', async () => {
   const fakePayload = {
     body: JSON.stringify({
-      myProp: FAKE_PROP_CONTENT,
+      url: FAKE_PROP_CONTENT,
     }),
   };
   // @ts-ignore next-line
   const result = await handle(fakePayload);
 
-  // eslint-disable-next-line no-console
-  expect(console.log).toBeCalledWith('payload', FAKE_PROP_CONTENT);
   expect(result).toEqual({
     headers,
-    statusCode: 301,
+    statusCode: 200,
     body: SUCCESS_MSG,
   });
 });
