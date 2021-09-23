@@ -1,22 +1,25 @@
 {
-  "name": "ts-serverless-boilerplate",
+  "name": "link-preview-lambda",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "yarn test --watch",
+    "test:watch": "yarn test --watch",
+    "start": "serverless invoke local --function link-preview-lambda --path ./data.json",
     "test": "jest . --collectCoverage",
     "deploy": "rm -rf .build/ && npm run lint && npm test --ci && serverless deploy --verbose",
     "lint": "eslint ./**.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/movidesk/ts-serverless-boilerplate.git"
+    "url": "git+https://github.com/movidesk/link-preview-lambda.git"
   },
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.83",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^27.0.1",
+    "@types/jsdom": "^16.2.13",
     "@types/node": "^16.7.13",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
@@ -47,5 +50,9 @@
         "tsconfig": "<rootDir>/tsconfig.json"
       }
     }
+  },
+  "dependencies": {
+    "axios": "^0.21.4",
+    "jsdom": "^17.0.0"
   }
 }

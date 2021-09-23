@@ -1,4 +1,4 @@
-service: ts-serverless-boilerplate
+service: link-preview-lambda
 
 frameworkVersion: '2'
 
@@ -13,5 +13,5 @@ plugins:
   - serverless-plugin-typescript
 
 functions:
-  ts-serverless-boilerplate:
+  link-preview-lambda:
     handler: index.handle
