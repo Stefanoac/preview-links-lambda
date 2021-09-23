@@ -1,4 +1,4 @@
-# ts serverless boilerplate
+# LINK PREVIEW LAMBDA
 
 **[Substitua a seção abaixo pela descrição do seu projeto]**
 Boilerplate para serverless em TS, ele já vem com várias ferramentas já configuradas como lint, testes, build, CI...
