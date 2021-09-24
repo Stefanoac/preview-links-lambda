@@ -8,7 +8,25 @@ provider:
   lambdaHashingVersion: 20201221
   memorySize: 256
   region: us-east-2
+  deploymentBucket:
+    name: movidesk-serverless-deploy
 
+iam:
+  role:
+    statements:
+      - Effect: "Allow"
+        Action:
+          - "s3:ListBucket"
+        Resource: "arn:aws:s3:::movidesk-serverless-deploy"
+      - Effect: "Allow"
+        Action:
+          - "s3:PutObject"
+        Resource:
+          Fn::Join:
+            - ""
+            - - "arn:aws:s3:::movidesk-serverless-deploy"
+              - "/*"
+              
 plugins:
   - serverless-plugin-typescript
 
