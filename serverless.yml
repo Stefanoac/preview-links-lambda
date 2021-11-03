@@ -1,35 +1,62 @@
 service: link-preview-lambda
 
 frameworkVersion: '2'
+configValidationMode: error
 
 provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
   memorySize: 256
-  region: us-east-2
+  region: us-east-1
   deploymentBucket:
-    name: movidesk-serverless-deploy
+    name: serverless-deploy
 
-iam:
-  role:
-    statements:
-      - Effect: "Allow"
-        Action:
-          - "s3:ListBucket"
-        Resource: "arn:aws:s3:::movidesk-serverless-deploy"
-      - Effect: "Allow"
-        Action:
-          - "s3:PutObject"
-        Resource:
-          Fn::Join:
-            - ""
-            - - "arn:aws:s3:::movidesk-serverless-deploy"
-              - "/*"
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:ListBucket"
+          Resource: "arn:aws:s3:::serverless-deploy"
+        - Effect: "Allow"
+          Action:
+            - "s3:PutObject"
+          Resource:
+            Fn::Join:
+              - ""
+              - - "arn:aws:s3:::serverless-deploy"
+                - "/*"
               
 plugins:
   - serverless-plugin-typescript
+  - serverless-api-gateway-throttling
+  - serverless-api-gateway-caching
+
+custom:
+  apiGatewayThrottling:
+    maxRequestsPerSecond: 1000
+    maxConcurrentRequests: 500
+  apiGatewayCaching:
+    enabled: true
 
 functions:
   link-preview-lambda:
     handler: index.handle
+    events:
+      - http:
+          path: handle
+          method: get
+          caching:
+            enabled: true
+          cors:
+            origin: '*'
+            headers:
+                - Content-Type
+                - X-Amz-Date
+                - Authorization
+                - X-Api-Key
+                - X-Amz-Security-Token
+                - X-Amz-User-Agent
+            allowCredentials: false
+            cacheControl: 'max-age=600, s-maxage=600, proxy-revalidate' # Caches on browser and proxy for 10 minutes and doesnt allow proxy to serve out of date content

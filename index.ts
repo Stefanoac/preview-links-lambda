@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda';
 import { DOMWindow, JSDOM } from 'jsdom';
 import { get } from './api'
+import * as Sentry from '@sentry/serverless';
 
-export const EMPTY_BODY_ERROR_MSG = 'Ocorreu um erro, não foi enviado nada ao servidor';
+export const EMPTY_BODY_ERROR_MSG = 'An error occurred, nothing was sent to the server';
 
 export interface Body {
   url: string
@@ -19,9 +20,18 @@ export interface ResponseBody
 
 export const headers = {
   'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true, 
 };
 
-export const handle: APIGatewayProxyHandler = async ({ body, ...rest }) => {
+if (!process.env.IS_LOCAL)
+{
+  Sentry.AWSLambda.init({
+    dsn: "https://af12472d38ba4259bf265f4695185696@o565813.ingest.sentry.io/5993608",
+    tracesSampleRate: 1.0,
+  });
+}
+
+export const handle = Sentry.AWSLambda.wrapHandler(async ({ body }:APIGatewayProxyEvent) => {
   try {
     if (!body) {
       throw new Error(EMPTY_BODY_ERROR_MSG);
@@ -38,13 +48,16 @@ export const handle: APIGatewayProxyHandler = async ({ body, ...rest }) => {
     };
   } 
   catch (err) {
+    Sentry.captureException(err);
+    Sentry.flush(2000);
+
     return {
       statusCode: 500,
       headers,
       body: err.message.toString(),
     };
   }
-};
+});
 
 function makeValuesResponseBody (data: string, url: string) {
   const dom = new JSDOM(data, {url, contentType: "text/html"} )

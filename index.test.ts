@@ -7,6 +7,14 @@ jest.mock('./api', () => ({
   get: jest.fn(() => Promise.resolve("<html><head><title>teste</title></head></html>"))
 }));
 
+jest.mock('@sentry/serverless', () => ({ 
+  AWSLambda: { 
+    wrapHandler: (a:any) => a, init: () => {} 
+  }, 
+  captureException: () => {},
+  flush: () => {}
+}));
+
 test('on fail, should return 500 code', async () => {
   const fakePayload = {
     body: undefined,
